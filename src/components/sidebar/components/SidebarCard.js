@@ -44,17 +44,7 @@ export default function SidebarDocs() {
         justify='center'
         px='15px'
         pt='55px'>
-        <Text
-          fontSize={{ base: "lg", xl: "18px" }}
-          color='white'
-          fontWeight='bold'
-          lineHeight='150%'
-          textAlign='center'
-          px='10px'
-          mt="10px"
-          mb='6px'>
-          Upgrade to PRO
-        </Text>
+
         <Text
           fontSize='14px'
           color={"white"}
@@ -67,18 +57,7 @@ export default function SidebarDocs() {
         </Text>
       </Flex>
       <Link href='https://horizon-ui.com/pro?ref=horizon-chakra-free'>
-        <Button
-          bg='whiteAlpha.300'
-          _hover={{ bg: "whiteAlpha.200" }}
-          _active={{ bg: "whiteAlpha.100" }}
-          mb={{ sm: "16px", xl: "24px" }}
-          color={"white"}
-          fontWeight='regular'
-          fontSize='sm'
-          minW='185px'
-          mx='auto'>
-          Upgrade to PRO
-        </Button>
+
       </Link>
     </Flex>
   );
