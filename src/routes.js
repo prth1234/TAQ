@@ -21,26 +21,26 @@ import SignInCentered from 'views/auth/signIn';
 
 const routes = [
   {
+    name: 'NFT Marketplace',
+    layout: '/admin',
+    path: '/nft-marketplace',
+    icon: (
+        <Icon
+            as={MdOutlineShoppingCart}
+            width="20px"
+            height="20px"
+            color="inherit"
+        />
+    ),
+    component: <NFTMarketplace />,
+    secondary: true,
+  },
+  {
     name: 'Main Dashboard',
     layout: '/admin',
     path: '/default',
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: <MainDashboard />,
-  },
-  {
-    name: 'NFT Marketplace',
-    layout: '/admin',
-    path: '/nft-marketplace',
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
-    component: <NFTMarketplace />,
-    secondary: true,
   },
   {
     name: 'Data Tables',
