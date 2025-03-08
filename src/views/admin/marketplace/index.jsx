@@ -89,15 +89,15 @@ export default function Marketplace() {
                   color={textColorBrand}
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
-                  to='#art'>
-                  Art
+                  to='#priority'>
+                    Priority
                 </Link>
                 <Link
                   color={textColorBrand}
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
                   to='#music'>
-                  Music
+                  Deadline
                 </Link>
                 <Link
                   color={textColorBrand}
@@ -113,8 +113,8 @@ export default function Marketplace() {
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
               <NFT
-                name='Abstract Colors'
-                author='By Esthera Jackson'
+                name='Software Engineer 1'
+                author='Cloud Cost'
                 bidders={[
                   Avatar1,
                   Avatar2,
@@ -126,12 +126,12 @@ export default function Marketplace() {
                   Avatar1,
                 ]}
                 image={Nft1}
-                currentbid='0.91 ETH'
+                currentbid='4w'
                 download='#'
               />
               <NFT
-                name='ETH AI Brain'
-                author='By Nick Wilson'
+                name='SDET 1'
+                author='ITAM'
                 bidders={[
                   Avatar1,
                   Avatar2,
@@ -143,12 +143,12 @@ export default function Marketplace() {
                   Avatar1,
                 ]}
                 image={Nft2}
-                currentbid='0.91 ETH'
+                currentbid='2w'
                 download='#'
               />
               <NFT
-                name='Mesh Gradients '
-                author='By Will Smith'
+                name='Engineering Manager 2'
+                author='AIOps'
                 bidders={[
                   Avatar1,
                   Avatar2,
@@ -160,7 +160,7 @@ export default function Marketplace() {
                   Avatar1,
                 ]}
                 image={Nft3}
-                currentbid='0.91 ETH'
+                currentbid='8w'
                 download='#'
               />
             </SimpleGrid>
@@ -178,7 +178,7 @@ export default function Marketplace() {
               gap='20px'
               mb={{ base: "20px", xl: "0px" }}>
               <NFT
-                name='Swipe Circles'
+                name='SDE IV'
                 author='By Peter Will'
                 bidders={[
                   Avatar1,
@@ -191,11 +191,11 @@ export default function Marketplace() {
                   Avatar1,
                 ]}
                 image={Nft4}
-                currentbid='0.91 ETH'
+                currentbid='12w'
                 download='#'
               />
               <NFT
-                name='Colorful Heaven'
+                name='Team Lead 2'
                 author='By Mark Benjamin'
                 bidders={[
                   Avatar1,
@@ -209,10 +209,10 @@ export default function Marketplace() {
                 ]}
                 image={Nft5}
                 currentbid='0.91 ETH'
-                download='#'
+                download='15w'
               />
               <NFT
-                name='3D Cubes Art'
+                name='VP Engineering'
                 author='By Manny Gates'
                 bidders={[
                   Avatar1,
@@ -226,7 +226,7 @@ export default function Marketplace() {
                 ]}
                 image={Nft6}
                 currentbid='0.91 ETH'
-                download='#'
+                download='20w'
               />
             </SimpleGrid>
           </Flex>
@@ -250,7 +250,7 @@ export default function Marketplace() {
                       px='22px'
                       py='18px'>
                       <Text color={textColor} fontSize='xl' fontWeight='600'>
-                          Job Openings
+                          Pending Refferals
                       </Text>
                       <Button variant='action'>See all</Button>
                   </Flex>
