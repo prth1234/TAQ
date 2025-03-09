@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"; // Import NavLink
 // Chakra imports
 import {
   Box,
@@ -44,6 +44,7 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -146,15 +147,19 @@ function SignIn() {
               </Text>
             </NavLink>
           </Flex>
-          <Button
-              fontSize='sm'
-              variant='brand'
-              fontWeight='500'
-              w='100%'
-              h='50'
-              mb='24px'>
-            Sign In
-          </Button>
+          <NavLink to='/admin/default'> {/* Wrap the button with NavLink */}
+            <Button
+                fontSize='sm'
+                variant='brand'
+                fontWeight='500'
+                w='100%'
+                h='50'
+                mb='24px'
+                type='button' // Ensure the button doesn't submit the form
+            >
+              Sign In
+            </Button>
+          </NavLink>
           <HSeparator text="OR" />
         </FormControl>
 
