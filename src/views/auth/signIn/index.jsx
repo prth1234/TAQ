@@ -27,6 +27,10 @@ import { RiEyeCloseLine } from "react-icons/ri";
 
 function SignIn() {
   const navigate = useNavigate(); // Initialize the navigate function
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
 
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
@@ -44,14 +48,59 @@ function SignIn() {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
+  const errorColor = useColorModeValue("red.500", "red.400");
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
-  const handleSignIn = () => {
-    // Perform sign-in logic here
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
 
-    // Navigate to /admin after successful sign-in
-    navigate("/admin");
+  const validatePassword = (password) => {
+    if (!password) {
+      setPasswordError("Password is required");
+      return false;
+    } else if (password.length < 8) {
+      setPasswordError("Must be at least 8 characters");
+      return false;
+    } else {
+      setPasswordError("");
+      return true;
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    validatePassword(value);
+  };
+
+  const handleSignIn = () => {
+    // Validate both fields before proceeding
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
+
+    if (isEmailValid && isPasswordValid) {
+      // Perform sign-in logic here
+      // Navigate to /admin after successful sign-in
+      navigate("/admin");
+    }
   };
 
   return (
@@ -92,17 +141,35 @@ function SignIn() {
               mb='8px'>
             Email<Text color={brandStars}>*</Text>
           </FormLabel>
-          <Input
-              isRequired={true}
-              variant='auth'
-              fontSize='sm'
-              ms={{ base: "0px", md: "0px" }}
-              type='email'
-              placeholder='mail@simmmple.com'
-              mb='24px'
-              fontWeight='500'
-              size='lg'
-          />
+          <Flex position="relative" alignItems="center" mb='24px'>
+            <Input
+                isRequired={true}
+                variant='auth'
+                fontSize='sm'
+                ms={{ base: "0px", md: "0px" }}
+                type='email'
+                placeholder='mail@simmmple.com'
+                fontWeight='500'
+                size='lg'
+                value={email}
+                onChange={handleEmailChange}
+                isInvalid={!!emailError}
+            />
+            {emailError && (
+              <Text
+                position="absolute"
+                right="-160px"
+                color={errorColor}
+                fontSize="sm"
+                fontWeight="500"
+                width="150px"
+                textAlign="left"
+              >
+                {emailError}
+              </Text>
+            )}
+          </Flex>
+          
           <FormLabel
               ms='4px'
               fontSize='sm'
@@ -111,25 +178,43 @@ function SignIn() {
               display='flex'>
             Password<Text color={brandStars}>*</Text>
           </FormLabel>
-          <InputGroup size='md'>
-            <Input
-                isRequired={true}
-                fontSize='sm'
-                placeholder='Min. 8 characters'
-                mb='24px'
-                size='lg'
-                type={show ? "text" : "password"}
-                variant='auth'
-            />
-            <InputRightElement display='flex' alignItems='center' mt='4px'>
-              <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
+          <Flex position="relative" alignItems="center" mb='24px'>
+            <InputGroup size='md'>
+              <Input
+                  isRequired={true}
+                  fontSize='sm'
+                  placeholder='Min. 8 characters'
+                  size='lg'
+                  type={show ? "text" : "password"}
+                  variant='auth'
+                  value={password}
+                  onChange={handlePasswordChange}
+                  isInvalid={!!passwordError}
               />
-            </InputRightElement>
-          </InputGroup>
+              <InputRightElement display='flex' alignItems='center' mt='4px'>
+                <Icon
+                    color={textColorSecondary}
+                    _hover={{ cursor: "pointer" }}
+                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                    onClick={handleClick}
+                />
+              </InputRightElement>
+            </InputGroup>
+            {passwordError && (
+              <Text
+                position="absolute"
+                right="-160px"
+                color={errorColor}
+                fontSize="sm"
+                fontWeight="500"
+                width="150px"
+                textAlign="left"
+              >
+                {passwordError}
+              </Text>
+            )}
+          </Flex>
+          
           <Flex justifyContent='space-between' align='center' mb='24px'>
             <FormControl display='flex' alignItems='center'>
               <Checkbox
@@ -163,7 +248,7 @@ function SignIn() {
               w='100%'
               h='50'
               mb='24px'
-              onClick={handleSignIn} // Add onClick handler
+              onClick={handleSignIn}
           >
             Sign In
           </Button>
