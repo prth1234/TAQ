@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-// Chakra imports
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -15,27 +14,23 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Link,
+  Alert,
 } from "@chakra-ui/react";
-// Custom components
 import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
-// Assets
 import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
 function SignUp() {
-  // Chakra color mode
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // Define color mode values
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -43,24 +38,22 @@ function SignUp() {
   const brandStars = useColorModeValue("brand.500", "brand.400");
   const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
   const googleText = useColorModeValue("navy.700", "white");
-  const googleHover = useColorModeValue(
-    { bg: "gray.200" },
-    { bg: "whiteAlpha.300" }
-  );
-  const googleActive = useColorModeValue(
-    { bg: "secondaryGray.300" },
-    { bg: "whiteAlpha.200" }
-  );
-  const [show, setShow] = useState(false);
-  const [isChecked, setIsChecked] = useState(false); // State for checkbox
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Modal state
+  const googleHover = useColorModeValue({ bg: "gray.200" }, { bg: "whiteAlpha.300" });
+  const googleActive = useColorModeValue({ bg: "secondaryGray.300" }, { bg: "whiteAlpha.200" });
 
   const handleClick = () => setShow(!show);
 
-  // Function to handle agreement
-  const handleAgree = () => {
-    setIsChecked(true); // Check the checkbox
-    onClose(); // Close the modal
+  const handleSignUp = () => {
+    // Basic validation
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    // Perform sign-up logic here
+
+    // Navigate to /admin after successful sign-up
+    navigate("/admin");
   };
 
   return (
@@ -76,8 +69,7 @@ function SignUp() {
         mb={{ base: "30px", md: "60px" }}
         px={{ base: "25px", md: "0px" }}
         mt={{ base: "40px", md: "14vh" }}
-        flexDirection="column"
-      >
+        flexDirection="column">
         <Box me="auto">
           <Heading color={textColor} fontSize="36px" mb="10px">
             Sign Up
@@ -87,11 +79,17 @@ function SignUp() {
             ms="4px"
             color={textColorSecondary}
             fontWeight="400"
-            fontSize="md"
-          >
-            Create an account to get started!
+            fontSize="md">
+            Enter your email and password to sign up!
           </Text>
         </Box>
+
+        {error && (
+          <Alert status="error" mb="24px">
+            <Alert.Icon />
+            <Text fontSize="sm">{error}</Text>
+          </Alert>
+        )}
 
         <FormControl>
           <FormLabel
@@ -100,29 +98,7 @@ function SignUp() {
             fontSize="sm"
             fontWeight="500"
             color={textColor}
-            mb="8px"
-          >
-            Full Name<Text color={brandStars}>*</Text>
-          </FormLabel>
-          <Input
-            isRequired={true}
-            variant="auth"
-            fontSize="sm"
-            ms={{ base: "0px", md: "0px" }}
-            type="text"
-            placeholder="John Doe"
-            mb="24px"
-            fontWeight="500"
-            size="lg"
-          />
-          <FormLabel
-            display="flex"
-            ms="4px"
-            fontSize="sm"
-            fontWeight="500"
-            color={textColor}
-            mb="8px"
-          >
+            mb="8px">
             Email<Text color={brandStars}>*</Text>
           </FormLabel>
           <Input
@@ -135,14 +111,15 @@ function SignUp() {
             mb="24px"
             fontWeight="500"
             size="lg"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <FormLabel
             ms="4px"
             fontSize="sm"
             fontWeight="500"
             color={textColor}
-            display="flex"
-          >
+            display="flex">
             Password<Text color={brandStars}>*</Text>
           </FormLabel>
           <InputGroup size="md">
@@ -154,34 +131,8 @@ function SignUp() {
               size="lg"
               type={show ? "text" : "password"}
               variant="auth"
-            />
-            <InputRightElement display="flex" alignItems="center" mt="4px">
-              <Icon
-                color={textColorSecondary}
-                _hover={{ cursor: "pointer" }}
-                as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                onClick={handleClick}
-              />
-            </InputRightElement>
-          </InputGroup>
-          <FormLabel
-            ms="4px"
-            fontSize="sm"
-            fontWeight="500"
-            color={textColor}
-            display="flex"
-          >
-            Confirm Password<Text color={brandStars}>*</Text>
-          </FormLabel>
-          <InputGroup size="md">
-            <Input
-              isRequired={true}
-              fontSize="sm"
-              placeholder="Confirm your password"
-              mb="24px"
-              size="lg"
-              type={show ? "text" : "password"}
-              variant="auth"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <InputRightElement display="flex" alignItems="center" mt="4px">
               <Icon
@@ -195,74 +146,39 @@ function SignUp() {
           <Flex justifyContent="space-between" align="center" mb="24px">
             <FormControl display="flex" alignItems="center">
               <Checkbox
-                id="terms-and-conditions"
+                id="remember-login"
                 colorScheme="brandScheme"
                 me="10px"
-                isChecked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
               />
               <FormLabel
-                htmlFor="terms-and-conditions"
+                htmlFor="remember-login"
                 mb="0"
                 fontWeight="normal"
                 color={textColor}
-                fontSize="sm"
-              >
-                I agree to the{" "}
-                <Link color={textColorBrand} onClick={onOpen}>
-                  terms and conditions
-                </Link>
+                fontSize="sm">
+                Keep me logged in
               </FormLabel>
             </FormControl>
+            <NavLink to="/auth/forgot-password">
+              <Text
+                color={textColorBrand}
+                fontSize="sm"
+                w="124px"
+                fontWeight="500">
+                Forgot password?
+              </Text>
+            </NavLink>
           </Flex>
-
-          {/* Modal for Terms and Conditions */}
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Terms and Conditions</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Text>
-                  By using this service, you agree to the following terms and
-                  conditions:
-                </Text>
-                <Text mt="4">
-                  1. You are responsible for maintaining the confidentiality of
-                  your account.
-                </Text>
-                <Text mt="4">
-                  2. You agree not to use the service for any illegal activities.
-                </Text>
-                <Text mt="4">
-                  3. We reserve the right to terminate your account at any time.
-                </Text>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleAgree}>
-                  Agree
-                </Button>
-                <Button variant="ghost" onClick={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-
-          <NavLink to="/admin/default">
-            <Button
-              fontSize="sm"
-              variant="brand"
-              fontWeight="500"
-              w="100%"
-              h="50"
-              mb="24px"
-              type="button"
-              isDisabled={!isChecked} // Disable button if checkbox is not checked
-            >
-              Sign Up
-            </Button>
-          </NavLink>
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w="100%"
+            h="50"
+            mb="24px"
+            onClick={handleSignUp}>
+            Sign Up
+          </Button>
           <HSeparator text="OR" />
         </FormControl>
 
@@ -275,8 +191,7 @@ function SignUp() {
           borderRadius="15px"
           mx={{ base: "auto", lg: "unset" }}
           me="auto"
-          mb={{ base: "20px", md: "auto" }}
-        >
+          mb={{ base: "20px", md: "auto" }}>
           <Button
             fontSize="sm"
             me="0px"
@@ -289,8 +204,7 @@ function SignUp() {
             fontWeight="500"
             _hover={googleHover}
             _active={googleActive}
-            _focus={googleActive}
-          >
+            _focus={googleActive}>
             <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
             Sign up with Google
           </Button>
@@ -300,17 +214,15 @@ function SignUp() {
             justifyContent="center"
             alignItems="start"
             maxW="100%"
-            mt="0px"
-          >
+            mt="0px">
             <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-              Already have an account?
+              Already registered?
               <NavLink to="/auth/sign-in">
                 <Text
                   color={textColorBrand}
                   as="span"
                   ms="5px"
-                  fontWeight="500"
-                >
+                  fontWeight="500">
                   Sign In
                 </Text>
               </NavLink>
