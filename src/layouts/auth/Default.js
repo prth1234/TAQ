@@ -30,7 +30,7 @@ function AuthIllustration(props) {
         justifyContent='start'
         direction='column'>
         <NavLink
-          to='/admin'
+          to='/auth/sign-in'
           style={() => ({
             width: "fit-content",
             marginTop: "40px",
@@ -48,7 +48,7 @@ function AuthIllustration(props) {
               color='secondaryGray.600'
             />
             <Text ms='0px' fontSize='sm' color='secondaryGray.600'>
-              Back to Simmmple
+              Back to Homepage
             </Text>
           </Flex>
         </NavLink>
@@ -60,18 +60,20 @@ function AuthIllustration(props) {
           w={{ lg: "50vw", "2xl": "44vw" }}
           position='absolute'
           right='0px'>
-          <Flex
-            bg={`url(${illustrationBackground})`}
-            justify='center'
-            align='end'
-            w='100%'
-            h='100%'
-            bgSize='cover'
-            bgPosition='50%'
-            position='absolute'
-            borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}></Flex>
+        <Flex
+  bg={`url('https://i.pinimg.com/736x/d5/91/31/d59131dae0bc27e6bc21b501df745a2d.jpg')`}
+  justify="center"
+  align="end"
+  w="100%"
+  h="100%"
+  bgSize="70%"  // Adjusted to make the image smaller
+  bgRepeat="no-repeat"
+  bgPosition="center"
+  position="absolute"
+  borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}
+  mr="200px"
+></Flex>
         </Box>
-        <Footer />
       </Flex>
       <FixedPlugin />
     </Flex>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -60,18 +61,6 @@ function Auth() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleClick = () => setShow(!show);
-  const handleTabsChange = (index) => {
-    setTabIndex(index);
-  };
-
-  const handleSignIn = () => {
-    navigate("/sign-in");
-  };
-
-  const handleSignUp = () => {
-    navigate("/sign-up");
-  };
-
   return (
       <DefaultAuth illustrationBackground={illustration} image={illustration}>
         {/* Fixed Tabs Only */}
@@ -132,99 +121,91 @@ function Auth() {
               </Text>
             </Box>
 
-            {tabIndex === 0 ? (
-                // Sign In Panel
-                <Box>
-                  <FormControl>
-                    <FormLabel
-                        display="flex"
-                        ms="4px"
-                        fontSize="sm"
-                        fontWeight="500"
-                        color={textColor}
-                        mb="8px"
-                    >
-                      Email<Text color={brandStars}>*</Text>
-                    </FormLabel>
-                    <Input
-                        isRequired={true}
-                        variant="auth"
-                        fontSize="sm"
-                        ms={{ base: "0px", md: "0px" }}
-                        type="email"
-                        placeholder="mail@simmmple.com"
-                        mb="24px"
-                        fontWeight="500"
-                        size="lg"
-                    />
-                    <FormLabel
-                        ms="4px"
-                        fontSize="sm"
-                        fontWeight="500"
-                        color={textColor}
-                        display="flex"
-                    >
-                      Password<Text color={brandStars}>*</Text>
-                    </FormLabel>
-                    <InputGroup size="md">
-                      <Input
-                          isRequired={true}
-                          fontSize="sm"
-                          placeholder="Min. 8 characters"
-                          mb="24px"
-                          size="lg"
-                          type={show ? "text" : "password"}
-                          variant="auth"
-                      />
-                      <InputRightElement display="flex" alignItems="center" mt="4px">
-                        <Icon
-                            color={textColorSecondary}
-                            _hover={{ cursor: "pointer" }}
-                            as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                            onClick={handleClick}
-                        />
-                      </InputRightElement>
-                    </InputGroup>
-                    <Flex justifyContent="space-between" align="center" mb="24px">
-                      <FormControl display="flex" alignItems="center">
-                        <Checkbox
-                            id="remember-login"
-                            colorScheme="brandScheme"
-                            me="10px"
-                        />
-                        <FormLabel
-                            htmlFor="remember-login"
-                            mb="0"
-                            fontWeight="normal"
-                            color={textColor}
-                            fontSize="sm"
-                        >
-                          Keep me logged in
-                        </FormLabel>
-                      </FormControl>
-                      <Text
-                          color={textColorBrand}
-                          fontSize="sm"
-                          w="150px"
-                          fontWeight="500"
-                          cursor="pointer"
-                      >
-                        Forgot password?
-                      </Text>
-                    </Flex>
-                    <Button
-                        fontSize="sm"
-                        variant="brand"
-                        fontWeight="500"
-                        w="100%"
-                        h="50"
-                        mb="24px"
-                        onClick={handleSignIn}
-                    >
-                      Sign In
-                    </Button>
-                    <HSeparator text="OR" />
-                  </FormControl>
+        <FormControl>
+          <FormLabel
+              display='flex'
+              ms='4px'
+              fontSize='sm'
+              fontWeight='500'
+              color={textColor}
+              mb='8px'>
+            Email<Text color={brandStars}>*</Text>
+          </FormLabel>
+          <Input
+              isRequired={true}
+              variant='auth'
+              fontSize='sm'
+              ms={{ base: "0px", md: "0px" }}
+              type='email'
+              placeholder='mail@simmmple.com'
+              mb='24px'
+              fontWeight='500'
+              size='lg'
+          />
+          <FormLabel
+              ms='4px'
+              fontSize='sm'
+              fontWeight='500'
+              color={textColor}
+              display='flex'>
+            Password<Text color={brandStars}>*</Text>
+          </FormLabel>
+          <InputGroup size='md'>
+            <Input
+                isRequired={true}
+                fontSize='sm'
+                placeholder='Min. 8 characters'
+                mb='24px'
+                size='lg'
+                type={show ? "text" : "password"}
+                variant='auth'
+            />
+            <InputRightElement display='flex' alignItems='center' mt='4px'>
+              <Icon
+                  color={textColorSecondary}
+                  _hover={{ cursor: "pointer" }}
+                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                  onClick={handleClick}
+              />
+            </InputRightElement>
+          </InputGroup>
+          <Flex justifyContent='space-between' align='center' mb='24px'>
+            <FormControl display='flex' alignItems='center'>
+              <Checkbox
+                  id='remember-login'
+                  colorScheme='brandScheme'
+                  me='10px'
+              />
+              <FormLabel
+                  htmlFor='remember-login'
+                  mb='0'
+                  fontWeight='normal'
+                  color={textColor}
+                  fontSize='sm'>
+                Keep me logged in
+              </FormLabel>
+            </FormControl>
+            <NavLink to='/auth/forgot-password'>
+              <Text
+                  color={textColorBrand}
+                  fontSize='sm'
+                  w='124px'
+                  fontWeight='500'>
+                Forgot password?
+              </Text>
+            </NavLink>
+          </Flex>
+          <Button
+              fontSize='sm'
+              variant='brand'
+              fontWeight='500'
+              w='100%'
+              h='50'
+              mb='24px'>
+            Sign In
+          </Button>
+          <HSeparator text="OR" />
+        </FormControl>
 
                   <Flex
                       zIndex="2"
@@ -510,4 +491,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default SignIn;
